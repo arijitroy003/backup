@@ -1,0 +1,37 @@
+Algo_GaussElimination()
+{
+	INPUT : Coefficients of the equations in form of a matrix
+			Read order of matrix N
+			Read the equations in a N x N+1 matrix
+
+	CONDITIONS: Row and Column indices start from 1
+
+	//Generating Upper triangular matrix
+	for j=1 to N
+		for i=1 to N
+			if i > j
+				c = A[i][j]/A[j][j];
+				for k=1 to N+1
+					A[i][k]=A[i][k]-c*A[j][k];
+				end for
+			endif
+		end for
+	end for
+
+	x[n]=A[N][N+1]/A[N][N]
+
+	for i=N-1 to 1 //Backward Substitution
+		sum=0
+		for j = i+1 to N
+			sum = sum + A[i][j]*x[j]
+		end for
+		x[i]=(A[i][n+1]-sum)/A[i][i]
+	end for
+
+	for i=1 to N
+		Output value of x[i] //Required unknown Variables
+	end for
+}
+
+ 
+ 

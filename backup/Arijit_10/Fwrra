@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Use ioo.ovh to move and temporary store files in the cloud">
+  <meta property="og:description" content="Use ioo.ovh to move and temporary store files in the cloud">
+  <meta property="og:image:secure_url" itemprop="image" content="https://ioo.ovh/css/ico.png"/>
+  <meta property="og:title" content="ioo.ovh - The temporary cloud service" />
+  <meta property="og:type" content="website" />
+  <title>ioo.ovh - The temporary cloud service</title>
+  <link href="https://ioo.ovh/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://ioo.ovh/css/dropzone.min.css" rel="stylesheet">
+  <link href="https://ioo.ovh/css/index.css" rel="stylesheet">
+  <link href="https://ioo.ovh/css/ico.png" rel="shortcut icon" type="image/png"/>
+
+
+</head>
+<body>
+
+  <script src="https://ioo.ovh/js/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ioo.ovh/js/qrcode.js"></script>
+
+  <div class="container">
+    <!-- Header -->
+    <h1><a href="https://ioo.ovh/">ioo.ovh</a></h1>
+
+    <h4><b>ioo.ovh the temporary cloud service!</b><br /><small>Use this website to quickly move files or share them privately with friends: after some time, everything you uploaded will be wiped off! It's free. It's temporary. And it's full-encrypted. Give it a shot! :)</small></h4>
+
+        <a href="https://ioo.ovh/more">Learn more...</a>
+    
+
+
+    <hr>
+    <h4 id="title"></h4>
+
+
+
+    
+
+    <!-- Error Parola  -->
+    <div class="alert alert-danger alert-dismissible" id="expired-info" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      No file matched. Probably the link has expired or wrong.
+    </div>
+
+    
+    <div id="learn_more">
+    <!--<h3>Welcome to ioo.ovh!</h3>
+    <p>Your temporary full-encrypted <i>temporary cloud</i>. Use this website to share contents with friends or to move files from one device to another: after some time, everything you uploaded will be wiped off.</p>-->
+    <h4>The idea</h4>
+    <div class="row">
+
+      <div class="col-md-2 center">
+      <img src="demo/phil-plain.jpg"></div>
+      <div class="col-md-10"><p>Hi! My name is <a href="https://filippo.calzavara.me" target="_blank">Filippo</a>, I'm a student at <b>Polytechnic University of Milan</b>, Italy.</p><p>One day I was working on a university's computer and a friend of mine needed to share a file with me. Although it was just a simple PDF, we didn't know how to handle it: I am very skeptical about to log into a cloud or email service with an untrusted computer. So... how do we transfer the file? </p></div>
+    </div>
+    <div class="row"><div class="col-md-8 col-md-offset-4"><a href="https://ioo.ovh/"><button class="btn btn-default"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to the homepage</button></a></div></div>
+
+    <hr>
+    <h4>Introducing ioo.ovh</h4>
+    <p>From this story came up the idea of a private, secure and free temporary cloud service. Sort of website that generates a QR Code or a link that you use once to download your files, then you forget it forever.<br>
+    <ul>
+    <li><b>Private:</b> Because it's important to share files only with the people we choose</li>
+    <li><b>Secure:</b> Every connection use SSL (thanks to <a href="https://letsencrypt.org" target="_blank">Let's Encrypt</a>) and every file is encrypted on the server <a href="#encryption">[See full details]</a>.</li>
+    <li><b>Free:</b> No Ads. No spam. No premium services.</li>
+    </ul>
+    </p>
+    <hr>
+    <h4>How can it be free?</h4>
+    <p>The same server that host this website also runs other projects, like <a href="https://filippo.calzavara.me" target="_blank">my personal website</a>, hence the monthly costs of the hosting would have been the same with or without ioo.ovh. So, why don't we dedicate some free space to the rest of the world? :) </p>
+      <div class="row"><div class="col-md-8 col-md-offset-4"><a href="https://ioo.ovh/"><button class="btn btn-default"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to the homepage</button></a></div></div>
+    <hr>
+    <h4 id="encryption">What does it mean that files are encrypted?</h4>
+    <p>Basically every file uploaded is modified by the server to make it unreadable by anyone except you (or the person who has the link). This means that even the owner of the website can't see the content, which lead users to <a href="#terms">huge responsibilities</a>.</p>
+    <p>To giving you an example, I have captured part of the hexadecimal codes that compose the profile picture that you see above (called plain text). Then I've encrypted the picture with the same method used on ioo.ovh, and this was the result:</p>
+    <div class="row">
+      <div class="col-md-6 center">
+      <a href="https://ioo.ovh/demo/phil-plain.jpg" target="_blank"><img src="https://ioo.ovh/demo/phil-plain.png" width="300px"/></a>
+      <br><br><small>Decrypted version of the photo</small><br><br>
+      </div>
+      <div class="col-md-6 center">
+      <a href="https://ioo.ovh/demo/phil-encrypted.jpg" target="_blank"><img src="https://ioo.ovh/demo/phil-encrypted.png" width="310px"/></a>
+      <br>
+      <br><small>Encrypted version of the photo</small>
+      </div>
+    </div>
+    <p>The two files are definitely different. You can click on the images to check how the browser tries to interpret unsuccessfully the encrypted photo whereas reads successfully the dencrypted one.</p>
+    <p>Moreover I took steps into avoiding buteforce attacks and flooding requests by filtering suspicious behaviour</p>
+    <b>Things for nerd:</b>
+    <small>
+    <p>All the files uploaded into this server are first encoded with <kbd>base64</kbd> and then encrypted with <kbd>mcrypt.TripleDES</kbd> through a filter on the stream. Next step TODO: <kbd>OpenSSL/AES-128 GCM</kbd>. Every link generated by the system is cryptographically secure. No decrypted file is temporary saved on the server while downloading. The key used in the above example is "test". <a href="https://ioo.ovh/demo/phil-encrypted.jpg" target="_blank">You can try to download the image by yourself</a> and decrypt it :) Every filename and extension is replace on upload to ensure that any type of file (even PHP or EXE) could be uploaded without incurring into system error (and for security purposes, of course).</p>
+    </small>
+      <div class="row"><div class="col-md-8 col-md-offset-4"><a href="https://ioo.ovh/"><button class="btn btn-default"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to the homepage</button></a></div></div>
+    <hr>
+    <h4>Why encryption is so important?</h4>
+    <p>Privacy is the first reason. We don't want either to see our files being published or to have someone look into it. Especially if the content is sensible, like Credit Cards numbers, Social Security numbers or a photo of our ID card: sometimes it's far better to rely on an external temporary encrypted cloud service, instead of sending attachments by email.</p>
+    <hr>
+    <h2 id="terms">Terms and usage</h2>
+    <ul>
+    <li>You are the only responsible of files' content. </li>
+    <li>You can upload at most 21 files of 7 MB each</li>
+    <li>You agree to make a fair use of the resources to you dedicated, respecting other users</li>
+    <li>You agree not to upload any malicious software</li>
+    <li>You are the sole responsible for files that you download and open</li>
+    <li>You will have a limited number of downloads available</li>
+    <li>Your IP address will be registered anytime you browse this website. This website will not log you while browsing yet how many requests you make to the server</li>
+    <li>Your IP will not be registered on upload or download jobs</li>
+    <li>Your files will be deleted some seconds after the time chosen (in order to let the system synchronize), at the next refresh of any page of the website. If you want to be sure about content removing, click on <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> next to the page's URL: this is going to delete all the files immediately.</li>
+    <li>This website does not offer any warranty of any kind on the files integrity. You are going to upload and download file at your own risk. Content information is not provided by any uploader user</li>
+    </ul>
+    <p>The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.</p>
+    <p>For other inquiries, bugs or suggestions please contact <small><kbd>info@ioo.ovh</kbd></small>. <a href="https://pgp.mit.edu/pks/lookup?op=get&search=0xB87EAF0053ECE56D" target="_blank">PGP public key is available here</a>.<br /><br /><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=94KSUZ7DP23J6" target="_blank">Would you like to offer me a coffee?</a></p>
+    <div class="row"><div class="col-md-8 col-md-offset-4"><a href="https://ioo.ovh/"><button class="btn btn-default"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to the homepage</button></a></div></div>
+    <hr>
+
+    <h2 id="credits">Credits</h2>
+
+    <ul>
+    <li><a href="http://getbootstrap.com/">Bootstrap</a></li>
+    <li><a href="http://www.d-project.com/" target="_blank">QR Code Generator for JavaScript</a></li>
+    <li><a href="http://www.billyargel.com/" target="_blank">Bella Donna</a> - <b>Font</b></li>
+    <li><a href="http://www.dropzonejs.com/" target="_blank">DropzoneJS</a></li>
+    <li><a href="https://github.com/josecl/cool-php-captcha" target="_blank">cool-php-captcha</a></li>
+    </ul>
+
+    <div class="row"><div class="col-md-8 col-md-offset-4"><a href="https://ioo.ovh/"><button class="btn btn-default"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to the homepage</button></a></div></div>
+    <hr>
+    <h3>Disclosure regarding the processing of personal data</h3>
+    <p>Dear user, we inform you that the personal data you have provided, will provide, and that which we obtain through your use of our website will be used solely for the purpose related to the service which you have requested.</p>
+    <p>We wish to inform you that you may exercise the rights provided by the Privacy Code, particularly in regards to the possibility of knowing the nature and type of information in our possession, to request its integration or rectification, as well as to exercise, at any time, the right to object to the treatment and receiving of messages via e-mail, even to request that we delete your data.</p>
+    <h4>Cookies</h4>
+    <p>Cookies are small text files created when your browser loads a particular website and then these text files are stored in your browser directory. Websites use cookies to store information regarding navigation, user preferences as well as to manage access to reserved user areas. The website managers and those who install the cookies through the website can access only those cookies they have stored on your browser. Here you can find more information about cookies: <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank">https://en.wikipedia.org/wiki/HTTP_cookie</a></p>
+    <h4>Technical Cookies that do not require consent</h4>
+    <p>In the course of navigating our website, ioo.ovh will install on your device and your web browser some cookies that are tools permitting us to store some useful data which improve our offered services. These cookies are:</p>
+    <ul>
+    <li><i>PHPSESSID</i>: it memorizes server-side session's unique ID</li>
+    <li><i>exp</i>: it memorizes the expiration selected by the user while uploading files</li>
+    </ul>
+    <p>Use and processing related to these cookies do not require your consent, under the applicable law. Please note that this website does not use profiling cookies for which to ask consent.</p>
+    <h4>Deleting/Disabling cookies</h4>
+    <p>To disable cookies through browser, please refer to the link below:</p>
+    <ul>
+    <li><a href="https://support.google.com/chrome/answer/95647?hl=en" target="_blank">Chrome</a></li>
+    <li><a href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences" target="_blank">Firefox</a></li>
+    <li><a href="http://windows.microsoft.com/en-us/internet-explorer/delete-manage-cookies#ie=ie-11" target="_blank">Internet Explorer</a></li>
+    <li><a href="http://help.opera.com/Windows/10.00/en/cookies.html" target="_blank">Opera</a></li>
+    <li><a href="https://support.apple.com/en-us/HT201265" target="_blank">Safari</a></li>
+    </ul>
+    <div class="row"><div class="col-md-8 col-md-offset-4"><a href="https://ioo.ovh/"><button class="btn btn-default"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to the homepage</button></a></div></div>
+
+    <br><br>
+
+    </div>
+
+        <!-- Show/Copy parola & expiration info -->
+    <div class="row">
+      <div class="success-upload success-retrieve">
+        <div class="col-md-5">
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="sr-only">Your link:</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="linkParola" value="https://ioo.ovh/Fwrra" readonly>
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" id="copyButton"><span aria-hidden="true" class="glyphicon glyphicon-copy"></span></button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-7 raw">
+
+         <div class="col-xs-2"><button class="btn btn-default" id="delAll"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div>
+        <div class="col-xs-10"><div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span class="sr-only">Info:</span>
+            <span class="timer"><i>loading...</i></span> left
+          </div></div>
+
+
+        </div>
+      </div>
+    </div>
+            <!-- Table list file -->
+    <div id="fileList">
+      <table class="table">
+      <col width="30">
+      <col width="auto">
+      <col width="95">
+      <col width="80">
+        <thead> <tr> <th>#</th> <th>File name/Preview</th> <th>Dimension</th> <th>Download</th> </tr> </thead>
+        <tbody>
+          <tr><th scope="row">1</th><td>prog.zip</td><td><p>30.84 KB</p></td> <td><a href="https://ioo.ovh/download.php?f=cHJvZw&e=zip&token=0fff037040373f96e6083fa95782e8b4"><button class="btn btn-default downloadClick"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></button></a></td></tr>        </tbody>
+      </table>
+    </div>
+        <!-- Buttons -->
+    <div class="raw" id="buttons" class="success-upload">
+            <div class="col-md-4 col-md-offset-2">
+                  <a href="https://ioo.ovh/"><button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Upload new files</button></a><br><br>
+        </div>
+                <div class="col-md-6">
+          <div id="zip"><a href="https://ioo.ovh/download.php?zip=1&token=b1d9052f947fa1d205a44c99b555595db2d2a6ef">
+            <button class="btn btn-default downloadClick" id="zipClick" title="It may take a while for the zip to generate... be patient!"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Get a zip archive</button></a><br><br></div>
+          </div>
+                  </div>
+                <div class="conditions">
+                  By using this Service, you acknowledge that you have read and understood <a href="https://ioo.ovh/more#terms">terms and conditions.</a><br>
+
+        <br></div>
+                <!-- QR Code -->
+
+        <div class="row success-upload success-retrieve">
+
+          <div class="col-md-3 col-md-offset-4 qr">
+            <a href="https://ioo.ovh/Fwrra" class="thumbnail">
+              <div id="qrcode"></div>
+              <script type="text/javascript" nonce="a49cf403bc3f9c72705160c4dcde38e27b3847a1">
+            //General purpose
+            var parola="Fwrra";
+
+            $("#delAll").click(function() {
+              var conf=confirm("Do you really want to delete all files?");
+              if(conf){
+                window.location.replace('https://ioo.ovh/remover.php?p=Fwrra&token=0fff037040373f96e6083fa95782e8b4');
+              }
+
+            });
+                          $(".success-retrieve").fadeIn('slow');
+              $("#buttons").fadeIn('slow');
+              var display = $('.timer');
+                          //QR Handling
+            var typeNumber = 10;
+            var errorCorrectionLevel = 'H';
+            var qr = qrcode(typeNumber, errorCorrectionLevel);
+            qr.addData("https://ioo.ovh/Fwrra");
+            qr.make();
+            document.getElementById('qrcode').innerHTML = qr.createImgTag();
+
+          </script>
+        </a>
+      </div>
+    </div>
+
+
+    <!-- END CONTENT -->
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="text-muted">Made in 🇮🇹 with ❤️ by <a href="https://filippo.calzavara.me" target="_blank">filippo.calzavara.me</a><br><small><a href="https://ioo.ovh/more#credits">Credits</a> - Currently there are 56 users served by ioo.ovh :) </small></p>
+    </div>
+  </footer>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/dropzone.js"></script>
+  <script src="js/script.js?v=1"></script>
+    <script type="text/javascript" nonce="a49cf403bc3f9c72705160c4dcde38e27b3847a1">
+
+    var display = $('.timer');
+    startTimer(38514, display);
+
+
+  </script>
+   <script nonce="a49cf403bc3f9c72705160c4dcde38e27b3847a1">
+    var counter=0;
+    Dropzone.options.filedropzone = {
+      maxFilesize: 7,
+      parallelUploads: 2,
+      maxFiles: 21,
+      init: function() {
+        this.on("success", function(file) {
+            $("#retrieve").hide();
+            $("#uploader").fadeOut('slow', function() {
+                $(".success-upload").fadeIn('slow');
+            });
+            var value=$('#selectExpiration').find(":selected").val();
+            var display = $('.timer');
+            startTimer(value, display);
+            document.cookie = "exp="+value;
+            window.history.pushState("", "",parola);
+
+
+        });
+      }
+    };
+   /* (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-88729829-1', 'auto');
+    ga('set', 'location', 'https://ioo.ovh');
+    ga('anonymizeIp', true);
+    ga('send', 'pageview');*/
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-88729829-1', 'auto', {
+      'anonymizeIp': true
+      , 'storage': 'none'
+      , 'clientId': window.localStorage.getItem('ga_clientId')
+    });
+    ga('set', 'location', 'https://ioo.ovh');
+    ga(function(tracker) {
+      window.localStorage.setItem('ga_clientId', tracker.get('clientId'));
+    });
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
